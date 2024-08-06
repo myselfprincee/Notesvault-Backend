@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import axios from 'axios';
 import bodyParser from 'body-parser';
 import router from './auth.js';
-import Note from '../models/note.js';
+import Note from '../models/Note.js';
 import fetchUser from '../middleware/fetchUser.js';
 import User from '../models/User.js';
 import mongoose from 'mongoose';

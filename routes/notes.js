@@ -1,6 +1,6 @@
 import fetchUser from '../middleware/fetchUser.js';
 import { body, validationResult } from 'express-validator';
-import Note from '../models/note.js';
+import Note from '../models/Note.js';
 import router from './auth.js';
 import myCache from "../middleware/cache.js";
 
