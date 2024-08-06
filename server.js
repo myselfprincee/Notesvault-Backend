@@ -37,7 +37,6 @@ if (cluster.isPrimary) {
 
 } else {
   app.listen(port,'0.0.0.0', () => {
-  console.log(`NotesVault Backend listening on port ${port}`);
   console.log(`Worker ${process.pid} started`);
 });
 
