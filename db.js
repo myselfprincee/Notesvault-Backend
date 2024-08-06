@@ -7,10 +7,10 @@ mongoose.set('strictQuery', true);
 
 const dbname = mongoose.createConnection(process.env.mongoURI);
 dbname.on('connected', () => {
-    console.log(`Connected to database: ${dbname.name}`);
+    // console.log(`Connected to database: ${dbname.name}`);
   });
 
-console.log(process.env.mongoURI)
+// console.log(process.env.mongoURI)
 
 const connectToMongo = () => {
     mongoose.connect(process.env.mongoURI, 

@@ -5,7 +5,5 @@ dotenv.config({
 });
 
 const serviceUri = process.env.REDIS_URI;
-console.log(serviceUri)
+// console.log(serviceUri)
 export const redis = new Redis(serviceUri); 
-
-redis.flushall()

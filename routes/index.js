@@ -16,12 +16,6 @@ dotenv.config({ path: './.env' });
 
 router.use(bodyParser.urlencoded({ extended: false }));
 
-router.use((req, res, next) => {
-    res.setHeader('ngrok-skip-browser-warning', 69420);
-    console.log("header set")
-    next();
-});
-
 router.get('/get-speech-token', async (req, res, next) => {
     res.setHeader('Content-Type', 'application/json');
     const speechKey = process.env.SPEECH_KEY;
