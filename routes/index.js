@@ -43,30 +43,22 @@ router.get('/get-speech-token', async (req, res, next) => {
 router.get('/get-public-note', async (req, res, next) => {
     try {
         const noteId = req.headers['id'];
-        const username = req.headers['user_name'];
+        const username = req.headers['user'];
 
-        // console.log(noteId, username)
-        // Validate noteId (optional step)
-        // Example: Check if it's a valid MongoDB ObjectID
-        // ...
+        console.log(noteId, username)
 
         const isValid = mongoose.Types.ObjectId.isValid(noteId)
-
-        // myCache.del(`note-${noteId}`)
-        // console.log(myCache)
 
         if (!isValid) {
             return res.status(400).json({ error: 'Invalid note ID, make sure the url is correct.' });
         }
 
         const user = await User.findOne({ username: username });
-        // console.log(user.username)
+
         if (!user) {
             return res.status(404).json({ error: `Incorrect URL.` });
         }
         const userNote = await Note.findById(noteId);
-
-        // console.log(userNote)
 
         if (!userNote) {
             return res.status(404).json({ error: `Note with ID ${noteId} not found.` });
@@ -77,9 +69,6 @@ router.get('/get-public-note', async (req, res, next) => {
         if (!userNote.user.equals(user._id)) {
             return res.status(400).json({ error: `The URL is incorrect. The Owner of this note is not ${user.username}` });
         }
-
-        // console.log("mycache :", myCache.get(`note-${noteId}`))
-        // console.log(noteId)
 
         if (user._id.equals(userNote.user) && userNote.Discoverability === 'public') {
 
@@ -96,7 +85,6 @@ router.get('/get-public-note', async (req, res, next) => {
                 }
             }
             const response = { title: userNote.title, description: userNote.description, tags: userNote.tag };
-            // console.log("response", response)
             await redis.set(`note-${noteId}`, JSON.stringify(response));
             return res.json(response);
         }
