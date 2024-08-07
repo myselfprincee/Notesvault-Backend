@@ -144,7 +144,7 @@ router.put('/toggle-discoverability', fetchUser, async (req, res) => {
 
             await userNote.save();
 
-            return res.send({ messege: "Discoverability of this note is set to " + userNote.Discoverability + " and the like field has also been removed." });
+            return res.send({ success: true, Discoverability: userNote.Discoverability , messege: "Discoverability of this note is set to " + userNote.Discoverability + " and the like field has also been removed." });
 
         }
 
