@@ -30,7 +30,7 @@ router.post('/register', [
     
     //to check whether the user with same email exists already
     try {
-        let user = await User.findOne({ email: req.body.email });
+        let user = await User.findOne({ username: req.body.username  });
         if (user) {
             return res.status(400).json({
                 error: "A user with this email already exists"
@@ -59,11 +59,7 @@ router.post('/register', [
 })
 
 //ROUTE::2   Authenticating a user using POST ---> NO SIGN UP REQUIRED {THIS IS LOGIN} 
-router.post('/login', [
-    body('email', "Enter a valid Email Address").isEmail(),
-    body('password', "Password must be atleast 8 characters including UPPERCASE, lowercase, special characters and Numbers").exists(),
-    
-], async (req, res) => {
+router.post('/login', async (req, res) => {
     
     let success = false;
     
@@ -72,12 +68,12 @@ router.post('/login', [
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
-    const { email, password } = req.body;
+    const { username, password } = req.body;
     try {
         
-        let user = await User.findOne({ email })
+        let user = await User.findOne({ username: username });
         console.log(user)
-        if (!email) {
+        if (!username) {
             return res.status(400).json({ error: "Invalid! User doesn't exist. Please Try with correct credentials" })
             
         }
@@ -88,7 +84,7 @@ router.post('/login', [
         }
         
         const sign = process.env.SIGNATURE;
-        const authtoken = jwt.sign({ user: { id: user.id, name: user.name, email: email } }, sign);
+        const authtoken = jwt.sign({ user: { id: user.id, name: user.name, username: username } }, sign);
         success = true
         res.json({ success, authtoken })
 
