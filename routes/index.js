@@ -128,7 +128,7 @@ router.put('/toggle-discoverability', fetchUser, async (req, res) => {
 
             // console.log("this is the updated shit: ", updatedNote)
 
-            return res.send({ messege: "Discoverability of this note is set to " + userNote.Discoverability + " and the like field is also been added now you can see the number of likes users has been given to you." });
+            return res.send({ success: true, Discoverability: userNote.Discoverability , messege: "Discoverability of this note is set to " + userNote.Discoverability + " and the like field is also been added now you can see the number of likes users has been given to you." });
 
         } else {
             if (userNote.likes !== undefined && userNote.likedBy !== undefined) {
@@ -144,7 +144,7 @@ router.put('/toggle-discoverability', fetchUser, async (req, res) => {
 
             await userNote.save();
 
-            return res.send({ messege: "Discoverability of this note is set to " + userNote.Discoverability + " and the like field is also been removed." });
+            return res.send({ messege: "Discoverability of this note is set to " + userNote.Discoverability + " and the like field has also been removed." });
 
         }
 
