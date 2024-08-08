@@ -154,6 +154,27 @@ router.put('/toggle-discoverability', fetchUser, async (req, res) => {
 
 });
 
+router.get('/check-discoverability', fetchUser, async (req, res) => {
+    try {
+        const noteId = req.headers['id'];
+        const userNote = await Note.findById(noteId);
+
+        const isValid = mongoose.Types.ObjectId.isValid(noteId)
+
+        if (!isValid) {
+            return res.status(400).json({ error: 'Invalid note ID, make sure the url is correct.' });
+        }
+
+        if (!userNote) {
+            return res.status(404).json({ error: `Note with ID ${noteId} not found.` });
+        }
+
+        return res.send({ Discoverability: userNote.Discoverability });
+    } catch (error) {
+        console.log("error: ",error)
+    }
+});
+
 router.post("/like-the-note", fetchUser, async (req, res) => {
 
     try {
